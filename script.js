@@ -24,7 +24,7 @@ function resetForm() {
   isbnField.value = "";
 }
 
-function renderBookList(array) {
+function renderBookList(array = []) {
 
     table.innerHTML = ''
 
