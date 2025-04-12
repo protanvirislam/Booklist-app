@@ -24,7 +24,7 @@ function resetForm() {
   isbnField.value = "";
 }
 
-function renderBookList(array = []) {
+function renderBookList(array) {
 
     table.innerHTML = ''
 
@@ -48,7 +48,7 @@ function renderBookList(array = []) {
   
 
 
-renderBookList(JSON.parse(localStorage.getItem('booksArray')));
+renderBookList(JSON.parse(localStorage.getItem('booksArray')) ?? []);
 
 
 
