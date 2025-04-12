@@ -70,7 +70,7 @@ function getValue(e) {
 
 
     resetForm();
-    renderBookList( booksArray);
+    renderBookList( booksArray??[]);
    
   } else {
     alert("Oops! Looks like you missed a field. Please complete all fields.");
@@ -94,7 +94,7 @@ function clickHandler() {
 
  localStorage.setItem('booksArray', JSON.stringify(booksArray));
 
-renderBookList(JSON.parse(localStorage.getItem('booksArray')));
+renderBookList(JSON.parse(localStorage.getItem('booksArray'))??[]);
 UpdateDOMPointer()
 }
 
