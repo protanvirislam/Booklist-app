@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+
+:root {
+  
+}
+
+body {
+ font-family: "Special Gothic Expanded One", sans-serif;
+ letter-spacing: 2px;
+ width: 50vw;
+ height: 100vh;
+ margin: auto;
+}
+
+@media only screen and (max-width: 790px) {
+  body {
+    width: 100vw;
+    padding: 20px;
+  }
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.title {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-icon {
+    color: #5F2797;
+    margin: 0px 10px;
+
+}
+
+.book {
+    color: #5F2797;
+}
+
+.field-title, .field-author, .field-isbn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 30px 0px;
+    align-content: stretch;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+ 
+}
+
+input[type=text], input[type=number] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e7e7e7;
+    border-radius: 5px;
+}
+
+label {
+    color: gray;
+}
+
+input:focus-visible {
+    outline: none;
+
+  }
+  
+  input:focus {
+    border: 2px solid #5f279778;
+   
+  }
+
+  button[type=submit] {
+    background-color: #5f279793;
+    border: none;
+    padding: 10px 25px;
+    color: white;
+    font-size: 24px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  button[type=submit]:hover {
+   background-color:#5F2797 ;
+  }
+
+
+  table {
+
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+   
+  }
+
+
+  
+
+
+  thead {
+    
+    padding: 10px;
+    border-bottom: 2px solid gray;
+    text-align: left;
+    font-size: 14px;
+    font-weight: lighter;
+    text-transform: uppercase;
+  }
+
+  th {
+    background-color: white;
+  }
+
+
+  
+  td,th{
+    padding: 20px;
+  }
+  tbody {
+    width:700px;
+  }
+  tbody tr{
+    color: gray;
+    font-size: 14px;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  tr td i {
+    color: red;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+
+
+  
