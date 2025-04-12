@@ -18,6 +18,7 @@ if(existing) {
 
 
 
+
 function resetForm() {
   authorField.value = "";
   titleField.value = "";
@@ -27,6 +28,9 @@ function resetForm() {
 function renderBookList(array) {
 
     table.innerHTML = ''
+
+    console.log(array)
+
 
     array.forEach((item,index) => {
       const tr = document.createElement("tr");
