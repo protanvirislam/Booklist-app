@@ -1,118 +1,175 @@
-const titleField = document.querySelector("#title");
-const authorField = document.querySelector("#author");
-const isbnField = document.querySelector("#isbn");
-const submit = document.querySelector("button[type=submit]");
-const table = document.querySelector("tbody");
-const close = document.querySelectorAll(".close");
+// Table Js
 
-let booksArray = [];
+// const btn = document.querySelector(".delete");
+// const table = document.querySelector("table");
 
-let existing = JSON.parse(localStorage.getItem('booksArray'));
+// function clickHandler(e) {
+//   setTimeout(() => {
+//     table.classList.toggle("threeDMode");
+//   }, 1000);
+//   table.classList.toggle("threeDMode");
+// }
 
+// btn.addEventListener("click", clickHandler);
 
-if(existing) {
-  booksArray = booksArray.concat(existing);
-}
+//main Js
+// ______________________________________________________________
 
-
-
-
-
-
-function resetForm() {
-  authorField.value = "";
-  titleField.value = "";
-  isbnField.value = "";
-}
-
-function renderBookList(array) {
-
-    table.innerHTML = ''
-
-    console.log(array)
-
-
-    array.forEach((item,index) => {
-      const tr = document.createElement("tr");
-      tr.setAttribute('data-index', index)
-      tr.innerHTML = `
-                  <td >${item.title}</td>
-                  <td>${item.author}</td>
-                  <td>${item.ISBN}</td>
-                  <td ><i  class="fa-solid fa-square-xmark close"></i></td>
-           `;
-  
-      table.appendChild(tr);
-    });
-
-    UpdateDOMPointer()
-
+class Book {
+  constructor(title, author, isbn) {
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
   }
-    
-  
+}
 
+class UI {
+  // Static DOM NODE
+  static list_container = document.querySelector("#books-container");
+  static form = document.querySelector("#books-form");
+  static title = document.querySelector("#title");
+  static author = document.querySelector("#author");
+  static isbn = document.querySelector("#isbn");
+  static body = document.querySelector("body");
+  static del = document.querySelector(".delete");
 
-renderBookList(JSON.parse(localStorage.getItem('booksArray')) ?? []);
+  // Static DOM NODE
 
+  static displayBooks() {
+    console.log(Storage.getBooks());
+    const books = Storage.getBooks();
+    books.forEach((book) => UI.addBookToList(book));
+  }
 
+  static addBookToList(book) {
+    console.log("rendering");
 
-function getValue(e) {
-  e.preventDefault()
- 
-  if (titleField.value && authorField.value && isbnField.value) {
-    
-    booksArray.unshift({
-      title: titleField.value,
-      author: authorField.value,
-      ISBN: isbnField.value,
+    const row = document.createElement("tr");
+    row.innerHTML = `
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.isbn}</td>
+          <td><i class="fa-solid fa-square-xmark close"></i></td>
+   `;
+
+    UI.list_container.insertAdjacentElement("afterbegin", row);
+  }
+
+  static clearFormValue() {
+    UI.title.value = "";
+    UI.author.value = "";
+    UI.isbn.value = "";
+  }
+
+  static deleteBook(e) {
+    if (e.target.classList.contains("close")) {
+      e.target.parentNode.parentNode.remove();
+      //Also remove book from Storage
+      let isbn = e.target.parentNode.previousElementSibling.textContent;
+      Storage.removeBook(isbn);
+
+      //Show Success Alert for Delete from List
+      UI.showAlert(" Removed From The List", "success");
+    }
+  }
+
+  static showAlert(message, className) {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert alert-dismissible alert-${className} fade-out-box`;
+    const messageNode = document.createTextNode(message);
+    alertDiv.appendChild(messageNode);
+    UI.body.insertBefore(alertDiv, UI.form);
+
+    //Vanish after 5 sec
+    setTimeout(() => {
+      document.querySelector(".alert").classList.add("fade-out");
+      document.querySelector(".alert").addEventListener("transitionend", () => {
+        document.querySelector(".alert").remove();
+      });
+    }, 1500);
+  }
+}
+
+class Storage {
+  static getBooks() {
+    let books;
+    if (typeof localStorage !== undefined) {
+      if (localStorage.getItem("books") === null) {
+        books = [];
+      } else {
+        books = JSON.parse(localStorage.getItem("books"));
+      }
+
+      return books;
+    } else {
+      const warnDiv = document.createElement("div");
+      warnDiv.className = `alert alert-dismissible alert-warning`;
+      warnDiv.innerHTML = `Your Browser Doesn't Support localStorage :( unable to save the book on list"`;
+      UI.body.insertBefore(warnDiv, UI.form);
+    }
+  }
+
+  static addBook(book) {
+    let books = Storage.getBooks();
+    books.push(book);
+    localStorage.setItem("books", JSON.stringify(books));
+  }
+
+  static removeBook(isbn) {
+    console.log(isbn);
+    let books = Storage.getBooks();
+    books.forEach((book, index) => {
+      if (book.isbn === isbn) {
+        books.splice(index, 1);
+      }
     });
 
-  
+    localStorage.setItem("books", JSON.stringify(books));
+  }
 
-   localStorage.setItem('booksArray', JSON.stringify(booksArray));
+  static deleteAll() {
+    let allItems = [...UI.list_container.children];
+    allItems.forEach((item) => item.remove());
+    localStorage.removeItem("books");
 
+    UI.showAlert("Deleted All Item From The List!", "danger");
+  }
+}
 
+//Renderign Book
+document.addEventListener("DOMContentLoaded", UI.displayBooks);
 
-    resetForm();
-    renderBookList( booksArray??[]);
-   
+//Add Book to List
+UI.form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const title = UI.title.value;
+  const author = UI.author.value;
+  const isbn = UI.isbn.value;
+
+  //Form Validation
+  if (title && author && isbn) {
+    //Instantiate book Object from "Book" class;
+    let book = new Book(title, author, isbn);
+
+    // add book to UI
+    UI.addBookToList(book);
+
+    //add book to Storage
+    Storage.addBook(book);
+
+    //Clear The Form Value
+    UI.clearFormValue();
+    //Show Success Alert
+    UI.showAlert("Successfully Added To List", "success");
   } else {
-    alert("Oops! Looks like you missed a field. Please complete all fields.");
+    //Show Failed Alert
+    UI.showAlert("please fill in the field", "danger");
   }
-  
-}
+});
 
-submit.addEventListener("click", getValue);
+//Event: Remove Book From List
+UI.list_container.addEventListener("click", UI.deleteBook);
 
+//Event: Delete all from localStorate
 
-
-function clickHandler() {
-  console.log("clicking close")
-   
- let index = +this.parentNode.parentNode.getAttribute('data-index');
- booksArray = booksArray.filter(el => {
-  if(el !== booksArray[index]) {
-    return el
-  }
- })
-
- localStorage.setItem('booksArray', JSON.stringify(booksArray));
-
-renderBookList(JSON.parse(localStorage.getItem('booksArray'))??[]);
-UpdateDOMPointer()
-}
-
-
-
-function UpdateDOMPointer() {
-  document.querySelectorAll(".close").forEach((el)=> {
-    console.log(el)
-    el.addEventListener("click", clickHandler)
-  })
-
-}
-
-UpdateDOMPointer()
-
-
-
+UI.del.addEventListener("click", Storage.deleteAll);

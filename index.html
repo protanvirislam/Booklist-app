@@ -3,59 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
+
+    <!-- bootswatch -->
+    <link rel="stylesheet" href="./assets/bootstrap.min.css" />
     <!-- My custom CSS -->
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Font Awesome Personal Kit  -->
+    <script
+      src="https://kit.fontawesome.com/3695f62a44.js"
+      crossorigin="anonymous"
+    ></script>
     <title>BookList App</title>
   </head>
   <body>
-    <h1 class="title">
-      <div class="f-icon"><i class="fa-solid fa-book-open"></i></div>
-      <div class="text">My <span class="book">Book</span> List</div>
-    </h1>
+    
+    <div class=" heading mt-4 mb-4 btn btn-lg btn-primary">
+      <h1> <i class="fa-solid fa-book-open-reader"></i> MY <span>BOOK</span> LIST</h1>
+    </div>
 
-    <form action="" class="input-field">
-      <div class="field-title">
-        <label class="label-title"> Title</label>
-        <input id="title" type="text" />
+    <form class="form-control" id="books-form">
+      <div>
+        <fieldset>
+          <label class="form-label mt-4" for="title">TITLE</label>
+          <input class="form-control" id="title" type="text" placeholder="" />
+        </fieldset>
       </div>
 
-      <div class="field-author">
-        <label class="label-author"> Author</label>
-        <input id="author" type="text" />
+      <div>
+        <fieldset>
+          <label class="form-label mt-4" for="author">AUTHOR</label>
+          <input class="form-control" id="author" type="text" placeholder="" />
+        </fieldset>
       </div>
 
-      <div class="field-isbn">
-        <label class="label-author"> ISBN# </label>
-        <input id="isbn" type="number" />
+      <div>
+        <fieldset>
+          <label class="form-label mt-4" for="isbn">ISBN#</label>
+          <input pattern="\d{3}|\d{8}"  class="form-control" id="isbn" type="number" placeholder="" />
+        </fieldset>
       </div>
 
-      <button type="submit"> Add Book</button>
+      <button type="submit" class="mt-4 btn btn-outline-success">
+        ADD BOOK
+      </button>
     </form>
 
-    <div class="book-list">
-        <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th >ISBN#</th>
-                <th ></th>
-              
-              </tr>
-            </thead>
-            <tbody>
-         
-              
-              
-            </tbody>
-          </table>
-          
-    </div>
+    <!-- Table -->
+
+    <table>
+     
+        <thead >
+          <tr>
+            <td>TITLE</td>
+            <td>AUTHOR</td>
+            <td>ISBN#</td>
+            <td></td>
+          </tr>
+        </thead>
+    
+
+      <tbody id="books-container">
+        <!-- <tr>
+          <td>Title</td>
+          <td>Justin Tew</td>
+          <td>Design</td>
+          <td><i class="fa-solid fa-square-xmark"></i></td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <button class="table-btn delete">DELETE ALL</button>
 
     <script src="script.js"></script>
   </body>
