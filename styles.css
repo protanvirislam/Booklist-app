@@ -1,0 +1,125 @@
+body {
+    width: 50vw;
+    margin: auto;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+/* Table CSS */
+
+.heading {
+	text-align: center;
+	width: 100%;
+
+}
+.heading:active {
+	background-color:transparent !important;
+	color: white !important;
+}
+
+.heading h1 i {
+	color:#43CC29 ;
+	margin: 10px;
+	font-size: 44px;
+}
+.heading h1 span {
+	color: #43CC29;
+}
+
+form {
+	border-radius: 10px;
+	background-color: transparent !important;
+}
+
+table {
+    margin: 10px auto;
+  	border-spacing: 0px;
+	width: 100%;
+	box-shadow: 5px 4px 30px rgba(0,0,0,.10);
+	border-radius: 10px;
+	background: #fff;
+	transition: all .5s;
+	
+	
+	td {
+		padding: 20px 15px;
+	}
+	
+	thead {
+		background: linear-gradient(45deg, #43CC29, #43CC29);
+		border-radius: 10px 10px 0 0;
+		
+		tr {
+			border-radius: 10px 10px 0 0;
+		}
+		
+		td {
+			color: #fff;
+			font-size: 20px;
+		}
+		
+		td:first-of-type {
+			border-radius: 10px 0 0 0;
+		}
+		
+		td:last-of-type {
+			border-radius: 0 10px 0 0;
+		}
+	}
+	
+	tbody {
+		td {
+			border-top: 1px solid #f0f0f0;
+		}
+		
+		tr:hover {
+			background: rgba(123, 153, 218, .1);
+		}
+	}
+
+}
+
+table.threeDMode {
+	transform: rotateX(65deg) rotateZ(-35deg);
+}
+
+button {
+	border: none;
+	background: #ee0505;
+	color: #fff;
+	padding: 10px 50px;
+	font-family: 'Red Hat Display', sans-serif;
+	font-weight: 600;
+	margin: 0 auto;
+	display: block;
+	border-radius: 10px;
+}
+
+td i {
+	font-size: 24px;
+	color: red;
+	cursor: pointer;
+}
+
+.fade-out-box{
+	transition: all 1s ease;
+	opacity: 1;
+}
+
+.fade-out{
+	transition: all 1s ease-in-out;
+	opacity: 0;
+}
+
+
+
+@media only screen and (max-width: 790px) {
+	body {
+		width: 100vw;
+		padding: 20px;
+		
+	}
+}
